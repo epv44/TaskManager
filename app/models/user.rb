@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 	                     	message: "may only contain letters and numbers." }
 	attr_accessor :login
 
+	has_many :task, dependent: :destroy
+
 	def self.find_for_database_authentication(warden_conditions)
 		conditions = warden_conditions.dup
 	  	if login = conditions.delete(:login)
