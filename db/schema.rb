@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906183554) do
+ActiveRecord::Schema.define(version: 20140915022715) do
 
   create_table "tasks", force: true do |t|
     t.string   "title"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140906183554) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "open",        default: 0
   end
 
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"

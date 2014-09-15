@@ -6,7 +6,7 @@
     <%= f.input :description, as: :text %>
     <%= f.input :hours %>
     <%= f.input :due_date %>
-    <%= f.input :user_id do %>
+    <%= f.input :user_id, :label => "Assignee" do %>
       <%= f.select :user_id, User.all.map { |u| [u.username, u.id] }, include_blank: true %>
       <% end %>
   </div>

@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
+  before_action :validate_user, only: [:show]
   # GET /tasks
   # GET /tasks.json
   def index
@@ -68,8 +69,18 @@ class TasksController < ApplicationController
       @task = Task.find(params[:id])
     end
 
+    #ensure user can only view their specific tasks
+    def validate_user
+      if current_user.id == Task.find(params[:id]).user_id
+        #valid user, display the page! 
+      else
+        flash[:error] = "You must login to continue"
+        redirect_to(root_path)
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:title, :description, :hours, :due_date, :user_id)
+      params.require(:task).permit(:title, :description, :hours, :due_date, :user_id, :open)
     end
 end

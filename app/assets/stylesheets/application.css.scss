@@ -18,3 +18,15 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
+
+.nav-background{
+	background: url(../img/logo.jpg);
+	min-height: 85px;
+	min-width: 85px;
+	background-repeat: no-repeat;
+}
+
+.nav-custom {
+	padding-top: 20px;
+	font-weight: 600;
+}
