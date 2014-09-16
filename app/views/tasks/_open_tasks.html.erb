@@ -1,0 +1,31 @@
+<h1> Your Open Tasks: </h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th> # </th>
+      <th> Title </th>
+      <th> Assigned By </th>
+      <th> Due Date </th>
+      <th> View </th>
+      <th> Complete </th>
+      <th> Edit </th>
+      <th> Destroy <th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @open_tasks.each do |open_task| %>       
+    <tr>
+      <td> <%= open_task.id %> </td>
+      <td> <%= open_task.title %></td>
+      <td> <%= open_task.assigned_by %></td>
+      <td> <%= open_task.due_date.strftime("%d %b %y") %> </td>
+      <td><%= link_to 'Show', open_task, class: "btn btn-sm btn-primary" %></td>
+      <td> <%= link_to 'Complete', complete_task_path(open_task), class: "btn btn-sm btn-success" %>
+      </td>
+      <td> <%= link_to 'Edit', edit_task_path(open_task), class: 'btn btn-sm btn-primary' %></td>
+      <td> <%= link_to 'Destroy', open_task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %></td>
+    </tr>
+  </tbody>
+ <%end%>
+</table>
+<%= link_to 'New Task', new_task_path, class: 'btn btn-primary' %>

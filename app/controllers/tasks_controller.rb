@@ -2,11 +2,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy, :complete]
   before_action :authenticate_user!
   before_action :validate_user, only: [:show]
+  respond_to :html, :js
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.where(user_id: current_user.id)
-    
+    @tasks = Task.where(user_id: current_user.id, hours_to_complete: nil, open: 0)
     @open_tasks = current_user.tasks.where(open: 1, hours_to_complete: nil)
   end
 
@@ -35,6 +35,7 @@ class TasksController < ApplicationController
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -45,11 +46,17 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
+    @tasks = Task.where(user_id: current_user.id, hours_to_complete: nil, open: 0)
+    @open_tasks = current_user.tasks.where(open: 1, hours_to_complete: nil)
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @task }
-        format.js { render js: "alert('Updated');" }
+        if @task.hours_to_complete == nil
+          format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+          format.json { render :show, status: :ok, location: @task }
+          format.js {render inline: "location.reload();"}
+        else
+          format.html { redirect_to root_path, notice: 'Task was successfully closed.' }
+        end
       else
         format.html { render :edit }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -60,13 +67,17 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
+
     @task.destroy
+    #@open_task.destroy
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
+      format.js
     end
   end
-  #custom route
+
+  #custom method allows user to put in hours and close the task
   def complete
     @task = Task.find(params[:id])
   end

@@ -1,1 +1,8 @@
-<%= @task.title %>
+<h1> Task: <%= @task.title %> </h1>
+
+<%= simple_form_for(@task) do |f| %>
+    <%= f.input :hours_to_complete %>
+	<div class="form-actions">
+      <%= f.button :submit, class: 'btn btn-success' %>
+    </div>
+<% end %>

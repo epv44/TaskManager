@@ -1,61 +1,8 @@
 <div class = "row">
-  <div class = "col-md-7">
-    <h1> Your Open Tasks: </h1>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th> # </th>
-          <th> Title </th>
-          <th> Assigned By </th>
-          <th> Due Date </th>
-          <th> View </th>
-          <th> Complete </th>
-          <th> Edit </th>
-          <th> Destroy <th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @open_tasks.each do |open_task| %>       
-        <tr>
-          <td> <%= open_task.id %> </td>
-          <td> <%= open_task.title %></td>
-          <td> <%= open_task.assigned_by %></td>
-          <td> <%= open_task.due_date.strftime("%d %b %y") %> </td>
-          <td><%= link_to 'Show', open_task, class: "btn btn-sm btn-default" %></td>
-          <td> <%= link_to 'Complete', complete_task_path(open_task), class: "btn btn-sm btn-default" %></td>
-          <td> <%= link_to 'Edit', edit_task_path(open_task), class: 'btn btn-sm btn-default' %></td>
-          <td> <%= link_to 'Destroy', open_task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      </tbody>
-     <%end%>
-    </table>
-    <%= link_to 'New Task', new_task_path %>
+  <div id="open-tasks" class = "col-md-7">
+    <%= render 'tasks/open_tasks' %>
   </div>
-  <div class = "col-md-5">
-    <h1> All Assigned Tasks: </h1>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th> # </th>
-          <th> Title </th>
-          <th> Assigned By </th>
-          <th> Due Date </th>
-          <th> View </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @tasks.each do |task| %>       
-        <tr>
-          <td> <%= task.id %> </td>
-          <td> <%= task.title %></td>
-          <td> <%= task.assigned_by %></td>
-          <td> <%= task.due_date.strftime("%d %b %y") %> </td>
-          <td> <%= button_to("Open Task", task_path(task, :task => {:open => 1}), 
-                  :method => :put, remote: true, class: "btn btn-sm btn-success")%>  </td>
-          <td> <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      </tbody>
-     <%end%>
-    </table>
+  <div id="tasks" class = "col-md-5">
+   <%= render 'tasks/task' %>
   </div>
 </div>

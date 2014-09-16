@@ -1,0 +1,26 @@
+ <h1> All Assigned Tasks: </h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th> # </th>
+          <th> Title </th>
+          <th> Assigned By </th>
+          <th> Due Date </th>
+          <th> View </th>
+          <th> Destroy </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>       
+        <tr>
+          <td> <%= task.id %> </td>
+          <td> <%= task.title %></td>
+          <td> <%= task.assigned_by %></td>
+          <td> <%= task.due_date.strftime("%d %b %y") %> </td>
+          <td> <%= link_to("Open Task", task_path(task, :task => {:open => 1}), 
+                  :method => :put, remote: true, class: "btn btn-sm btn-primary")%>  </td>
+          <td> <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" %></td>
+        </tr>
+      </tbody>
+     <%end%>
+    </table>
