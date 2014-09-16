@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-
-  resources :tasks
+  match "/tasks/:id/complete", to: "tasks#complete", via: [:get, :post]
+  resources :tasks do
+  	member do
+  		post :complete
+  	end
+  end
 
   devise_for :users
   root 'static_pages#home'

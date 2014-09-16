@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :complete]
   before_action :authenticate_user!
   before_action :validate_user, only: [:show]
   # GET /tasks
@@ -65,6 +65,10 @@ class TasksController < ApplicationController
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  #custom route
+  def complete
+    @task = Task.find(params[:id])
   end
 
   private
