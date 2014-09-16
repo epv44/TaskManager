@@ -6,11 +6,14 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @tasks = Task.where(user_id: current_user.id)
+    
+    @open_tasks = current_user.tasks.where(open: 1, hours_to_complete: nil)
   end
 
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @tasks = Task.all
   end
 
   # GET /tasks/new
@@ -27,7 +30,7 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-
+    @task.assigned_by = current_user.username
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
@@ -46,6 +49,7 @@ class TasksController < ApplicationController
       if @task.update(task_params)
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @task }
+        format.js { render js: "alert('Updated');" }
       else
         format.html { render :edit }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -81,6 +85,7 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:title, :description, :hours, :due_date, :user_id, :open)
+      params.require(:task).permit(:title, :description, :hours, :due_date, :user_id, :open, :assigned_by,
+        :hours_to_complete)
     end
 end

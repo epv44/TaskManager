@@ -1,17 +1,29 @@
-<%= simple_form_for(@task) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :description, as: :text %>
-    <%= f.input :hours %>
-    <%= f.input :due_date %>
-    <%= f.input :user_id, :label => "Assignee" do %>
-      <%= f.select :user_id, User.all.map { |u| [u.username, u.id] }, include_blank: true %>
-      <% end %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+<% if current_user.admin == 1 %>
+  <%= simple_form_for(@task) do |f| %>
+    <%= f.error_notification %>
+    <div class="form-inputs">
+      <%= f.input :title %>
+      <%= f.input :description, as: :text %>
+      <%= f.input :hours %>
+      <%= f.input :due_date %>
+      <%= f.input :hours_to_complete %>
+      <%= f.input :user_id, :label => "Assignee" do %>
+        <%= f.select :user_id, User.all.map { |u| [u.username, u.id] }, include_blank: true %>
+        <% end %>
+    </div>
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+  <% else %>
+  <%= simple_form_for(@task) do |f| %>
+    <%= f.error_notification %>
+    <div class="form-inputs">
+      <%= f.input :hours_to_complete %>
+    </div>
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+  <% end %>
