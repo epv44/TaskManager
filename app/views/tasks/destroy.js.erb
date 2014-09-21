@@ -1,2 +1,3 @@
-$('#tasks').html("<%= j (render @task) %>");
-
+$('.delete-task').bind('ajax:success', function() {  
+        $(this).closest('tr').fadeOut();
+});

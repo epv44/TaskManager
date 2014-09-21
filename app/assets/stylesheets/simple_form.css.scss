@@ -14,9 +14,12 @@
 }
 
 div.boolean, .simple_form input[type='submit'] {
-  margin-left: 120px;
+
 }
 
+.submit-margin{
+  margin-left: 120px;
+}
 div.boolean label, label.collection_radio_buttons {
   float: none;
   margin: 0;

@@ -1,2 +1,6 @@
-$('#tasks').html("<%= escape_javascript(render @tasks) %>");
-$('#open_tasks').html("<%= escape_javascript(render @open_tasks) %>")
+<% if @task.open_task? %>
+  $('#edit_task_<%= @task.id %>').appendTo('#open-tasks');
+<% else %>
+  $('#edit_task_<%= @task.id %>').appendTo('#unopened-tasks');
+<% end %>
+

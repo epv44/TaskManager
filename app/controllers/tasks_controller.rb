@@ -2,12 +2,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy, :complete]
   before_action :authenticate_user!
   before_action :validate_user, only: [:show]
-  respond_to :html, :js
+
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.where(user_id: current_user.id, hours_to_complete: nil, open: 0)
-    @open_tasks = current_user.tasks.where(open: 1, hours_to_complete: nil)
+    @unopened_tasks = Task.where(user_id: current_user.id, hours_to_complete: nil, open_task: false)
+    @open_tasks = current_user.tasks.where(open_task: true, hours_to_complete: nil)
   end
 
   # GET /tasks/1
@@ -35,7 +35,7 @@ class TasksController < ApplicationController
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
-        format.js
+        format.js 
       else
         format.html { render :new }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -45,9 +45,7 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
-  def update
-    @tasks = Task.where(user_id: current_user.id, hours_to_complete: nil, open: 0)
-    @open_tasks = current_user.tasks.where(open: 1, hours_to_complete: nil)
+  def update    
     respond_to do |format|
       if @task.update(task_params)
         if @task.hours_to_complete == nil
@@ -69,11 +67,10 @@ class TasksController < ApplicationController
   def destroy
 
     @task.destroy
-    #@open_task.destroy
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
-      format.js
+      format.js { render layout: false}
     end
   end
 
@@ -101,6 +98,6 @@ class TasksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:title, :description, :hours, :due_date, :user_id, :open, :assigned_by,
-        :hours_to_complete)
+        :hours_to_complete, :open_task)
     end
 end

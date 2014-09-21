@@ -1,0 +1,5 @@
+$('#new_task').remove();
+$('#new_link').show();
+$('#unopened-tasks table tr:last').after(' <%= j render(@task) %> </td></tr>');
+$('#edit_task_<%= @task.id %>').submitOnCheck();
+

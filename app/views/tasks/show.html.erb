@@ -16,8 +16,13 @@
 </p>
 
 <p>
-  <strong>Due date:</strong>
+  <strong>Tentative due date:</strong>
   <%= @task.due_date %>
+</p>
+
+<p>
+	<strong> Assigned by: </strong>
+	<%= @task.assigned_by %>
 </p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
