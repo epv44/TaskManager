@@ -10,7 +10,10 @@ class User < ActiveRecord::Base
 	attr_accessor :login
 
 	has_many :tasks, dependent: :destroy
-
+	has_many :log_hours, dependent: :destroy
+	has_one :profile, dependent: :destroy
+	after_create :create_child
+	
 	def self.find_for_database_authentication(warden_conditions)
 		conditions = warden_conditions.dup
 	  	if login = conditions.delete(:login)
@@ -19,4 +22,8 @@ class User < ActiveRecord::Base
 	    	where(conditions).first
 	  	end
 	end
+
+	def create_child
+  		Profile.create("user_id" => id)
+  	end
 end

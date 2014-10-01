@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Hours:</strong>
+  <%= @log_hour.hours %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @log_hour.user %>
+</p>
+
+<%= link_to 'Edit', edit_log_hour_path(@log_hour) %> |
+<%= link_to 'Back', log_hours_path %>
