@@ -6,8 +6,8 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @unopened_tasks = Task.where(user_id: current_user.id, hours_to_complete: nil, open_task: false)
-    @open_tasks = current_user.tasks.where(open_task: true, hours_to_complete: nil)
+    @unopened_tasks = Task.where(user_id: current_user.id, complete: :false, open_task: false)
+    @open_tasks = current_user.tasks.where(open_task: true, complete: false)
   end
 
   # GET /tasks/1
@@ -54,6 +54,7 @@ class TasksController < ApplicationController
           format.js {render inline: "location.reload();"}
         else
           format.html { redirect_to root_path, notice: 'Task was successfully closed.' }
+          @task.update(complete: true)
         end
       else
         format.html { render :edit }
@@ -77,6 +78,7 @@ class TasksController < ApplicationController
   #custom method allows user to put in hours and close the task
   def complete
     @task = Task.find(params[:id])
+    @task.complete=true
   end
 
   private
@@ -98,6 +100,6 @@ class TasksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:title, :description, :hours, :due_date, :user_id, :open, :assigned_by,
-        :hours_to_complete, :open_task)
+        :hours_to_complete, :open_task, :complete)
     end
 end

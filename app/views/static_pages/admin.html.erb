@@ -1,0 +1,35 @@
+<div class = "row">
+	<div class = "col-md-12">
+		<h1> Admin Panel </h1>
+		<table class="table" id="admin-table">
+			<thead>
+			    <tr>
+			      <th> Employee Name </th>
+			      <th> Username </th>
+			      <th> Tasks Completed </th>
+			      <th> Hours By Task </th>
+			      <th> Hours Logged </th>
+			      <th> Percent Difference </th>
+			    </tr>
+			</thead>
+			<tbody>
+				<% @users.each do |user| %>
+					<tr>
+						<td> coming soon... </td>
+						<td> <%= user.username %> </td>
+						<td> <%= tasks_completed(user) %> </td>
+						<td> <%= hours_from_tasks(user) %> </td>
+						<td> <%= hours_logged(user) %> </td>
+						<td> <%= number_to_percentage(percent_difference(user)) %> </td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<p>
+			Features TODO:
+			<br>-> graphs: very employee by hour, rank productivity by percentage, timestamps on commits
+			<br> -> click employee to bring up new screen with historical stats on their individual performance 
+			<br>Want to request a feature? Talk to the dev team!
+		</p>
+	</div>
+</div>

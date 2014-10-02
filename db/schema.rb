@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001224759) do
+ActiveRecord::Schema.define(version: 20141002212730) do
 
   create_table "hours", force: true do |t|
     t.integer "hours"
@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20141001224759) do
   end
 
   create_table "log_hours", force: true do |t|
-    t.string   "hours"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "hours"
   end
 
   add_index "log_hours", ["user_id"], name: "index_log_hours_on_user_id"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20141001224759) do
     t.string   "assigned_by"
     t.integer  "hours_to_complete"
     t.boolean  "open_task",         default: false, null: false
+    t.boolean  "complete",          default: false, null: false
   end
 
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"

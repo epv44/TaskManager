@@ -28,7 +28,7 @@ class LogHoursController < ApplicationController
 
     respond_to do |format|
       if @log_hour.save
-        format.html { redirect_to @log_hour, notice: 'Log hour was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Successfully logged your hours.' }
         format.json { render :show, status: :created, location: @log_hour }
       else
         format.html { render :new }
