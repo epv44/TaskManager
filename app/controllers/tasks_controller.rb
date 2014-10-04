@@ -33,6 +33,7 @@ class TasksController < ApplicationController
     @task.assigned_by = current_user.username
     respond_to do |format|
       if @task.save
+        UserMailer.task_email(@task).deliver
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
         format.js 

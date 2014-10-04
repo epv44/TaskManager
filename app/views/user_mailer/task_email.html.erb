@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1> <%= @task.assigned_by %> has asigned you the following task: <%= @task.title %></h1>
+    <p>
+      <%= @task.description %>
+    </p>
+    <p>
+      To login to the site and view your task, follow this link: <%= @url %>.
+    </p>
+  </body>
+</html>

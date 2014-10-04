@@ -40,6 +40,8 @@ group :development do
 	gem 'seed_dump'
 end
 
+ruby "2.1.1"
+
 group :test do
 	gem 'selenium-webdriver', '2.35.1'
 	gem 'capybara', '2.2.1'
