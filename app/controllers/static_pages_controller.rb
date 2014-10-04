@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
 	end
 
 	def admin
-		@users = User.all
+		@users = User.where(admin: 0)
 	end
 
 	private
