@@ -16,12 +16,19 @@ module StaticPagesHelper
 
 	#Show the hours taken to complete the tasks for past two week cycle
 	def hours_from_tasks(user)
-		time_range = set_time
+		#time_range = set_time
 		total_hours=0
-		user.tasks.where(complete: true, updated_at: time_range).each do |t|
-			total_hours += t.hours_to_complete
-		end
-
+		if Date.today.day <= 15
+			#return first half of month
+			user.tasks.where(complete: true, created_at: Time.now.beginning_of_month..Time.now).each do |t|
+				total_hours += t.hours_to_complete
+			end
+		else
+			#return second half of month
+			user.tasks.where(complete: true, created_at: Date.today..Time.now.end_of_month).each do |t|
+				total_hours += t.hours_to_complete
+			end
+		end 
 		return total_hours
 	end
 	
