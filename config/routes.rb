@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   match '/about', to: 'static_pages#about', via: 'get'
   match '/log-hours', to: 'hours#log_hours', via: 'get'
   match '/admin', to: 'static_pages#admin', via: 'get'
+  match '/about', to: 'static_pages#about', via: 'get'
 end

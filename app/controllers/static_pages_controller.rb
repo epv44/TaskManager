@@ -8,6 +8,9 @@ class StaticPagesController < ApplicationController
 		@users = User.where(admin: 0)
 	end
 
+	def about
+
+	end
 	private
 	
     def validate_user
